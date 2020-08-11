@@ -36,8 +36,8 @@ var mapAlphabet = map[string][]int{
 
 func arrayExpand(id string) ([]int, int) {
 	idArray := mapAlphabet[string(id[0])]
-	for _, val := range id[1:len(id)-1] {
-		idArray = append(idArray, int(val) - 48)
+	for _, val := range id[1 : len(id)-1] {
+		idArray = append(idArray, int(val)-48)
 	}
 	checkNumber := int(id[len(id)-1]) - 48
 	return idArray, checkNumber
@@ -46,16 +46,24 @@ func arrayExpand(id string) ([]int, int) {
 func valid(idArray []int, unifyArray []int, checkNumber int) bool {
 	var sum = 0
 	resultArray := [10]int{0}
-	for idx:=0; idx < 10; idx++{
+	for idx := 0; idx < 10; idx++ {
 		resultArray[idx] = (idArray[idx] * unifyArray[idx]) % 10
 	}
 	for _, val := range resultArray {
 		sum += val
 	}
-	if (10 - sum) == checkNumber {
-		return true
+	if sum%10 == 0 {
+		if checkNumber == 0 {
+			return true
+		} else {
+			return false
+		}
 	} else {
-		return false
+		if 10-(sum%10) == checkNumber {
+			return true
+		} else {
+			return false
+		}
 	}
 }
 
