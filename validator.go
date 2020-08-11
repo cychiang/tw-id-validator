@@ -1,7 +1,6 @@
 package validator
 
 import (
-	"fmt"
 	"regexp"
 )
 
@@ -53,17 +52,19 @@ func valid(idArray []int, unifyArray []int, checkNumber int) bool {
 	for _, val := range resultArray {
 		sum += val
 	}
-	if 10 - sum == checkNumber {
+	if (10 - sum) == checkNumber {
 		return true
 	} else {
 		return false
 	}
 }
 
-func IdForeign(id string) {
+func IdForeign(id string) bool {
 	match, _ := regexp.Match(`^[A-Z][0-9]{9}`, []byte(id))
 	if match {
 		idArray, checkNumber := arrayExpand(id)
-		fmt.Println(valid(idArray, unifyArray, checkNumber))
+		return valid(idArray, unifyArray, checkNumber)
+	} else {
+		return false
 	}
 }
