@@ -1,9 +1,5 @@
 package validator
 
-import (
-	"regexp"
-)
-
 var unifyArray = []int{1, 9, 8, 7, 6, 5, 4, 3, 2, 1}
 var mapAlphabet = map[string][]int{
 	"A": {1, 0},
@@ -68,11 +64,6 @@ func valid(idArray []int, unifyArray []int, checkNumber int) bool {
 }
 
 func IdForeign(id string) bool {
-	match, _ := regexp.Match(`^[A-Z][0-9]{9}`, []byte(id))
-	if match {
-		idArray, checkNumber := arrayExpand(id)
-		return valid(idArray, unifyArray, checkNumber)
-	} else {
-		return false
-	}
+	idArray, checkNumber := arrayExpand(id)
+	return valid(idArray, unifyArray, checkNumber)
 }
