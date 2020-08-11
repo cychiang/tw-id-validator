@@ -41,12 +41,8 @@ func arrayExpand(id string) ([]int, int) {
 
 func valid(idArray []int, unifyArray []int, checkNumber int) bool {
 	var sum = 0
-	resultArray := [10]int{0}
 	for idx := 0; idx < 10; idx++ {
-		resultArray[idx] = (idArray[idx] * unifyArray[idx]) % 10
-	}
-	for _, val := range resultArray {
-		sum += val
+		sum += (idArray[idx] * unifyArray[idx]) % 10
 	}
 	if sum%10 == 0 {
 		if checkNumber == 0 {
