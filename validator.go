@@ -1,65 +1,48 @@
 package validator
 
-var unifyArray = []int{1, 9, 8, 7, 6, 5, 4, 3, 2, 1}
-var mapAlphabet = map[string][]int{
-	"A": {1, 0},
-	"B": {1, 1},
-	"C": {1, 2},
-	"D": {1, 3},
-	"E": {1, 4},
-	"F": {1, 5},
-	"G": {1, 6},
-	"H": {1, 7},
-	"J": {1, 8},
-	"K": {1, 9},
-	"L": {2, 0},
-	"M": {2, 1},
-	"N": {2, 2},
-	"P": {2, 3},
-	"Q": {2, 4},
-	"R": {2, 5},
-	"S": {2, 6},
-	"T": {2, 7},
-	"U": {2, 8},
-	"V": {2, 9},
-	"X": {3, 0},
-	"Y": {3, 1},
-	"W": {3, 2},
-	"Z": {3, 3},
-	"I": {3, 4},
-	"O": {3, 5},
+var unifyArray = []int{8, 7, 6, 5, 4, 3, 2, 1}
+var lookUpTable = map[string]int{
+	"A": 1,
+	"B": 10,
+	"C": 9,
+	"D": 8,
+	"E": 7,
+	"F": 6,
+	"G": 5,
+	"H": 4,
+	"J": 3,
+	"K": 2,
+	"L": 2,
+	"M": 11,
+	"N": 10,
+	"P": 9,
+	"Q": 8,
+	"R": 7,
+	"S": 6,
+	"T": 5,
+	"U": 4,
+	"V": 3,
+	"X": 3,
+	"Y": 12,
+	"W": 11,
+	"Z": 10,
+	"I": 9,
+	"O": 8,
 }
 
-func arrayExpand(id string) ([]int, int) {
-	idArray := mapAlphabet[string(id[0])]
-	for _, val := range id[1 : len(id)-1] {
-		idArray = append(idArray, int(val)-48)
-	}
+func idForeignValid(id string) bool {
+	var sum = lookUpTable[string(id[0])]
 	checkNumber := int(id[len(id)-1]) - 48
-	return idArray, checkNumber
-}
-
-func valid(idArray []int, unifyArray []int, checkNumber int) bool {
-	var sum = 0
-	for idx := 0; idx < 10; idx++ {
-		sum += (idArray[idx] * unifyArray[idx]) % 10
+	for idx, val := range id[1 : len(id)-1] {
+		sum += ((int(val) - 48) * unifyArray[idx]) % 10
 	}
-	if sum%10 == 0 {
-		if checkNumber == 0 {
-			return true
-		} else {
-			return false
-		}
+	if (sum%10+checkNumber)%10 == 0 {
+		return true
 	} else {
-		if 10-(sum%10) == checkNumber {
-			return true
-		} else {
-			return false
-		}
+		return false
 	}
 }
 
 func IdForeign(id string) bool {
-	idArray, checkNumber := arrayExpand(id)
-	return valid(idArray, unifyArray, checkNumber)
+	return idForeignValid(id)
 }
